@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catalog - Tresses & Trinkets</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #ffeef3;
+      padding: 40px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #764ba2;
+      margin-bottom: 30px;
+    }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .catalog-item {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .catalog-item:hover {
+      transform: scale(1.05);
+    }
+
+    .catalog-item img {
+      max-width: 100%;
+      border-radius: 10px;
+      height: 180px;
+      object-fit: contain;
+    }
+
+    .catalog-item h3 {
+      margin: 10px 0 5px;
+      color: #333;
+    }
+
+    .catalog-item p {
+      color: #666;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Our Full Catalog</h1>
+  <div class="catalog-grid" id="catalog-container"></div>
+
+  <script>
+    // Product data (same as shop.html)
+    const products = [
+      {
+        id: 1,
+        name: "Silk Luxury Scrunchie",
+        price: 25.99,
+        category: "silk",
+        description: "Premium silk scrunchie with elegant shine",
+        image: "scrunchie.png",
+        onSale: true,
+        salePrice: 19.99
+      },
+      {
+        id: 2,
+        name: "Cotton Comfort Pack",
+        price: 15.99,
+        category: "cotton",
+        description: "Set of 3 soft cotton scrunchies",
+        image: "scrunchie1.png",
+        onSale: false
+      },
+      {
+        id: 3,
+        name: "Satin Elegance",
+        price: 22.99,
+        category: "satin",
+        description: "Smooth satin finish for gentle hair care",
+        image: "scrunchie2.png",
+        onSale: false
+      },
+      {
+        id: 4,
+        name: "Velvet Dreams",
+        price: 28.99,
+        category: "velvet",
+        description: "Luxurious velvet texture scrunchie",
+        image: "scrunchie3.jpg",
+        onSale: true,
+        salePrice: 24.99
+      }
+      // Add more products if needed
+    ];
+
+    const container = document.getElementById("catalog-container");
+
+    products.forEach(product => {
+      const displayPrice = product.onSale ? product.salePrice : product.price;
+      const item = document.createElement("a");
+      item.className = "catalog-item";
+      item.href = `product-details.html?id=${product.id}`;
+      item.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p>₹${displayPrice.toFixed(2)}</p>
+      `;
+      container.appendChild(item);
+    });
+  </script>
+</body>
+</html>

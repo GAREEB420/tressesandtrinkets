@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - Tresses & Trinkets</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #764ba2;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #764ba2;
+        }
+
+        .cart-icon {
+            background: #764ba2;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.05);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .product-detail {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .product-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .product-images {
+            position: sticky;
+            top: 120px;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            color: white;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .sale-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ff6b6b;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .thumbnail-images {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #fecfef, #ff9a9e);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.1);
+        }
+
+        .product-info h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: #ffd700;
+            font-size: 1.2rem;
+        }
+
+        .rating-text {
+            color: #666;
+        }
+
+        .price-section {
+            margin: 2rem 0;
+        }
+
+        .current-price {
+            font-size: 2.5rem;
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .original-price {
+            font-size: 1.5rem;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 1rem;
+        }
+
+        .savings {
+            color: #ff6b6b;
+            font-weight: bold;
+            margin-left: 1rem;
+        }
+
+        .product-description {
+            margin: 2rem 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .product-features {
+            margin: 2rem 0;
+        }
+
+        .product-features h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .features-list {
+            list-style: none;
+        }
+
+        .features-list li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .features-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .quantity-section {
+            margin: 2rem 0;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #764ba2;
+            background: white;
+            color: #764ba2;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #764ba2;
+            color: white;
+        }
+
+        .quantity-input {
+            width: 80px;
+            padding: 0.5rem;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.2rem;
+        }
+
+        .add-to-cart-section {
+            margin: 2rem 0;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            display: inline-block;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #764ba2;
+            border: 2px solid #764ba2;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+        }
+
+        .product-tabs {
+            margin: 3rem 0;
+        }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: #764ba2;
+            border-bottom-color: #764ba2;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .specifications-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .specifications-table th,
+        .specifications-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .specifications-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .review {
+            border-bottom: 1px solid #eee;
+            padding: 1.5rem 0;
+        }
+
+        .review:last-child {
+            border-bottom: none;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .reviewer-name {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .review-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .review-stars {
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-text {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .product-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .product-detail {
+                padding: 2rem;
+            }
+            
+            .product-info h1 {
+                font-size: 2rem;
+            }
+            
+            .current-price {
+                font-size: 2rem;
+            }
+            
+            .tab-buttons {
+                flex-wrap: wrap;
+            }
+            
+            .tab-btn {
+                padding: 0.8rem 1rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="home.html" class="logo">Tresses & Trinkets</a>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="catalog.html">Catalog</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <a href="cart.html" class="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="product-detail">
+                <div class="product-layout">
+                    <div class="product-images">
+                        <div class="main-image" id="main-image">
+                            <div class="sale-badge" id="sale-badge" style="display: none;">SALE</div>
+                            🌸
+                        </div>
+                        <div class="thumbnail-images">
+                            <img src="scrunchie1.png" class="thumbnail" onclick="changeMainImage('scrunchie1.png')">
+                            <img src="scrunchie2.png" class="thumbnail" onclick="changeMainImage('scrunchie2.png')">
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h1 id="product-name">Silk Luxury Scrunchie</h1>
+                        
+                        <div class="product-rating">
+                            <div class="stars">★★★★★</div>
+                            <span class="rating-text">(4.8/5 - 127 reviews)</span>
+                        </div>
+
+                        <div class="price-section">
+                            <span class="current-price" id="current-price">$25.99</span>
+                            <span class="original-price" id="original-price" style="display: none;">$29.99</span>
+                            <span class="savings" id="savings" style="display: none;">Save $4.00</span>
+                        </div>
+
+                        <div class="product-description" id="product-description">
+                            Experience luxury with our premium silk scrunchie. Made from 100% mulberry silk, this scrunchie provides the perfect balance of style and hair care. The smooth silk surface reduces friction and prevents hair breakage while you sleep or during daily activities.
+                        </div>
+
+                        <div class="product-features">
+                            <h3>Key Features:</h3>
+                            <ul class="features-list">
+                                <li>100% Pure Mulberry Silk</li>
+                                <li>Reduces Hair Breakage</li>
+                                <li>Hypoallergenic & Gentle</li>
+                                <li>Machine Washable</li>
+                                <li>One Size Fits All</li>
+                            </ul>
+                        </div>
+
+                        <div class="quantity-section">
+                            <h3>Quantity:</h3>
+                            <div class="quantity-controls">
+                                <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
+                                <input type="number" class="quantity-input" id="quantity" value="1" min="1" max="10">
+                                <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
+                            </div>
+                        </div>
+
+                        <div class="add-to-cart-section">
+                            <button class="btn btn-primary" onclick="addToCart()">Add to Cart</button>
+                            <button class="btn btn-secondary" onclick="addToWishlist()">Add to Wishlist</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-tabs">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" onclick="showTab('description')">Description</button>
+                        <button class="tab-btn" onclick="showTab('specifications')">Specifications</button>
+                        <button class="tab-btn" onclick="showTab('reviews')">Reviews</button>
+                        <button class="tab-btn" onclick="showTab('care')">Care Instructions</button>
+                    </div>
+
+                    <div class="tab-content active" id="description-tab">
+                        <h3>Product Description</h3>
+                        <p>Our Silk Luxury Scrunchie represents the perfect fusion of elegance and functionality. Crafted from the finest grade mulberry silk, each scrunchie is designed to pamper your hair while making a sophisticated style statement.</p>
+                        <p>The natural properties of silk make this scrunchie ideal for all hair types, particularly beneficial for those with delicate, damaged, or chemically-treated hair. Unlike traditional elastic hair ties, our silk scrunchie glides smoothly against your hair, preventing snags, creases, and breakage.</p>
+                        <p>Whether you're wearing it during your beauty sleep or as a chic daytime accessory, this scrunchie maintains its shape and elegance wash after wash.</p>
+                    </div>
+
+                    <div class="tab-content" id="specifications-tab">
+                        <h3>Product Specifications</h3>
+                        <table class="specifications-table">
+                            <tr>
+                                <th>Material</th>
+                                <td>100% Mulberry Silk</td>
+                            </tr>
+                            <tr>
+                                <th>Silk Grade</th>
+                                <td>6A Grade</td>
+                            </tr>
+                            <tr>
+                                <th>Diameter</th>
+                                <td>5 inches (relaxed)</td>
+                            </tr>
+                            <tr>
+                                <th>Weight</th>
+                                <td>0.5 oz</td>
+                            </tr>
+                            <tr>
+                                <th>Care</th>
+                                <td>Machine washable, air dry</td>
+                            </tr>
+                            <tr>
+                                <th>Country of Origin</th>
+                                <td>Made in USA</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="tab-content" id="reviews-tab">
+                        <h3>Customer Reviews</h3>
+                        <div class="review">
+                            <div class="review-header">
+                                <span class="reviewer-name">Sarah M.</span>
+                                <span class="review-date">January 15, 2025</span>
+                            </div>
+                            <div class="review-stars">★★★★★</div>
+                            <div class="review-text">
+                                Absolutely love this scrunchie! My hair feels so much healthier since I started using it. No more creases or breakage. Worth every penny!
+                            </div>
+                        </div>
+                        <div class="review">
+                            <div class="review-header">
+                                <span class="reviewer-name">Emma L.</span>
+                                <span class="review-date">January 10, 2025</span>
+                            </div>
+                            <div class="review-stars">★★★★★</div>
+                            <div class="review-text">
+                                The quality is amazing! So soft and gentle on my hair. I've already ordered three more in different colors.
+                            </div>
+                        </div>
+                        <div class="review">
+                            <div class="review-header">
+                                <span class="reviewer-name">Jessica R.</span>
+                                <span class="review-date">January 8, 2025</span>
+                            </div>
+                            <div class="review-stars">★★★★☆</div>
+                            <div class="review-text">
+                                Beautiful scrunchie and great quality. Only giving 4 stars because I wish it came in more color options.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="care-tab">
+                        <h3>Care Instructions</h3>
+                        <h4>Washing:</h4>
+                        <ul>
+                            <li>Machine wash on gentle cycle with cold water</li>
+                            <li>Use mild detergent (silk-specific detergent recommended)</li>
+                            <li>Wash with similar colors</li>
+                            <li>Place in mesh laundry bag for extra protection</li>
+                        </ul>
+                        <h4>Drying:</h4>
+                        <ul>
+                            <li>Air dry only - do not use machine dryer</li>
+                            <li>Lay flat or hang to dry away from direct sunlight</li>
+                            <li>Avoid wringing or twisting</li>
+                        </ul>
+                        <h4>Storage:</h4>
+                        <ul>
+                            <li>Store in a cool, dry place</li>
+                            <li>Avoid storing in plastic bags for extended periods</li>
+                            <li>Keep away from sharp objects that might snag the silk</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Tresses & Trinkets. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Product data (in real app, this would come from URL parameters or API)
+        const products = {
+            1: {
+                id: 1,
+                name: "Silk Luxury Scrunchie",
+                price: 25.99,
+                salePrice: 19.99,
+                onSale: true,
+                category: "silk",
+                description: "Premium silk scrunchie with elegant shine",
+                image: "scrunchie1.png"
+            },
+            2: {
+                id: 2,
+                name: "Cotton Comfort Pack",
+                price: 15.99,
+                onSale: false,
+                category: "cotton",
+                description: "Set of 3 soft cotton scrunchies",
+                image: "scrunchie2"
+            }
+        };
+
+        let cart = [];
+        let currentProduct = products[1]; // Default product
+
+        function getProductIdFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            return id ? parseInt(id) : 1;
+        }
+
+        function loadProduct() {
+            const productId = getProductIdFromURL();
+            currentProduct = products[productId] || products[1];
+            
+            document.getElementById('product-name').textContent = currentProduct.name;
+            document.getElementById('main-image').innerHTML = `
+                <img src="${currentProduct.image}" alt="${currentProduct.name}" style="max-width:100%; max-height:100%; border-radius:12px;">
+`;
+
+            
+            if (currentProduct.onSale) {
+                document.getElementById('current-price').textContent = `${currentProduct.salePrice}`;
+                document.getElementById('original-price').textContent = `${currentProduct.price}`;
+                document.getElementById('original-price').style.display = 'inline';
+                document.getElementById('savings').textContent = `Save ${(currentProduct.price - currentProduct.salePrice).toFixed(2)}`;
+                document.getElementById('savings').style.display = 'inline';
+            } else {
+                document.getElementById('current-price').textContent = `${currentProduct.price}`;
+            }
+        }
+
+        function changeQuantity(delta) {
+            const quantityInput = document.getElementById('quantity');
+            let currentQuantity = parseInt(quantityInput.value);
+            let newQuantity = currentQuantity + delta;
+            
+            if (newQuantity >= 1 && newQuantity <= 10) {
+                quantityInput.value = newQuantity;
+            }
+        }
+       function changeMainImage(imagePath) {
+            document.getElementById('main-image').innerHTML = `
+             <img src="${imagePath}" alt="${currentProduct.name}" style="max-width:100%; max-height:100%; border-radius:12px;">
+    `;
+            }
+
+
+        function addToCart() {
+            const quantity = parseInt(document.getElementById('quantity').value);
+            
+            for (let i = 0; i < quantity; i++) {
+                cart.push(currentProduct);
+            }
+            
+            updateCartCount();
+            alert(`${quantity} x ${currentProduct.name} added to cart!`);
+        }
+
+        function addToWishlist() {
+            alert(`${currentProduct.name} added to wishlist!`);
+        }
+
+        function updateCartCount() {
+            document.getElementById('cart-count').textContent = cart.length;
+        }
+
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from all tab buttons
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        // Initialize page
+        loadProduct();
+        updateCartCount();
+
+        // Store cart in global variable for other pages to access
+        window.cartData = cart;
+    </script>
+</body>
+</html>

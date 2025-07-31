@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Tresses & Trinkets</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #eaff05 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #764ba2;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #764ba2;
+        }
+
+        .cart-icon {
+            background: #764ba2;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.05);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .page-title {
+            text-align: center;
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Filters */
+        .filters {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .filter-group select, .filter-group input {
+            padding: 0.5rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        /* Product Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            padding: 10px;
+        }
+
+        .product-image img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            color: #764ba2;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #764ba2;
+            border: 2px solid #764ba2;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .sale-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff6b6b;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="home.html" class="logo">Tresses & Trinkets</a>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="catalog.html">Catalog</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <a href="cart.html" class="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1 class="page-title">Our Scrunchie Collection</h1>
+            
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="category">Category</label>
+                    <select id="category">
+                        <option value="all">All Categories</option>
+                        <option value="silk">Silk</option>
+                        <option value="cotton">Cotton</option>
+                        <option value="satin">Satin</option>
+                        <option value="velvet">Velvet</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="price-range">Price Range</label>
+                    <select id="price-range">
+                        <option value="all">All Prices</option>
+                        <option value="0-10">₹0 - ₹10</option>
+                        <option value="10-20">₹10 - ₹20</option>
+                        <option value="20-30">₹20 - ₹30</option>
+                        <option value="30+">₹30+</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="search">Search</label>
+                    <input type="text" id="search" placeholder="Search products...">
+                </div>
+            </div>
+
+            <div class="products-grid" id="products-grid">
+                <!-- Products will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Tresses & Trinkets. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sample product data
+        const products = [
+            {
+                id: 1,
+                name: "Silk Luxury Scrunchie",
+                price: 25.99,
+                category: "silk",
+                description: "Premium silk scrunchie with elegant shine",
+                image: "scrunchie.png",
+                onSale: true,
+                salePrice: 19.99
+            },
+            {
+                id: 2,
+                name: "Cotton Comfort Pack",
+                price: 15.99,
+                category: "cotton",
+                description: "Set of 3 soft cotton scrunchies",
+                image: "scrunchie1.png",
+                onSale: false
+            },
+            {
+                id: 3,
+                name: "Satin Elegance",
+                price: 22.99,
+                category: "satin",
+                description: "Smooth satin finish for gentle hair care",
+                image: "scrunchie2.png",
+                onSale: false
+            },
+            {
+                id: 4,
+                name: "Velvet Dreams",
+                price: 28.99,
+                category: "velvet",
+                description: "Luxurious velvet texture scrunchie",
+                image: "scrunchie3.jpg",
+                onSale: true,
+                salePrice: 24.99
+            },
+            {
+                id: 5,
+                name: "Rainbow Silk Set",
+                price: 45.99,
+                category: "silk",
+                description: "Collection of 5 colorful silk scrunchies",
+                image: "scrunchie4.jpg",
+                onSale: false
+            },
+            {
+                id: 6,
+                name: "Classic Cotton",
+                price: 12.99,
+                category: "cotton",
+                description: "Simple and comfortable everyday scrunchie",
+                image: "scrunchie5.jpg",
+                onSale: false
+            },
+            {
+                id: 7,
+                name: "Metallic Satin",
+                price: 26.99,
+                category: "satin",
+                description: "Shimmery satin with metallic accents",
+                image: "scrunchie6.jpg",
+                onSale: true,
+                salePrice: 21.99
+            },
+            {
+                id: 8,
+                name: "Vintage Velvet",
+                price: 32.99,
+                category: "velvet",
+                description: "Retro-inspired velvet scrunchie",
+                image: "scrunchie7.jpg ",
+                onSale: false
+            }
+        ];
+
+       
+
+        function renderProducts(productsToRender = products) {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = '';
+
+            productsToRender.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                
+                const displayPrice = product.onSale ? product.salePrice : product.price;
+                const originalPrice = product.onSale ? `<span style="text-decoration: line-through; color: #999; font-size: 1rem;">₹${product.price}</span>` : '';
+                
+                productCard.innerHTML = `
+                    ${product.onSale ? '<div class="sale-badge">SALE</div>' : ''}
+                    <div class="product-image">
+                    <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">₹${displayPrice} ${originalPrice}</div>
+                        <div class="product-description">${product.description}</div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary" onclick="addToCart(${product.id})">Add to Cart</button>
+                            <a href="product-details.html?id=${product.id}" class="btn btn-secondary">View Details</a>
+                        </div>
+                    </div>
+                `;
+                
+                grid.appendChild(productCard);
+            });
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            const existingProduct = cart.find(item => item.id === productId);
+            if (existingProduct) {
+            existingProduct.quantity += 1;
+            } else {
+            cart.push({
+            id: product.id,
+            name: product.name,
+            price: Number(product.onSale ? product.salePrice : product.price),
+            quantity: 1,
+            image: product.image,
+            description: product.description
+        });
+    }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(`${product.name} added to cart!`);
+            updateCartCount();
+        }
+
+        function updateCartCount() {
+             const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('cart-count').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+        }
+
+        // on load
+        updateCartCount();
+
+
+        
+
+        function filterProducts() {
+            const category = document.getElementById('category').value;
+            const priceRange = document.getElementById('price-range').value;
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+
+            let filtered = products.filter(product => {
+                // Category filter
+                if (category !== 'all' && product.category !== category) {
+                    return false;
+                }
+
+                // Price filter
+                const price = product.onSale ? product.salePrice : product.price;
+                if (priceRange !== 'all') {
+                    const [min, max] = priceRange.split('-').map(p => p.replace('+', ''));
+                    if (max) {
+                        if (price < parseInt(min) || price > parseInt(max)) {
+                            return false;
+                        }
+                    } else {
+                        if (price < parseInt(min)) {
+                            return false;
+                        }
+                    }
+                }
+
+                // Search filter
+                if (searchTerm && !product.name.toLowerCase().includes(searchTerm) && 
+                    !product.description.toLowerCase().includes(searchTerm)) {
+                    return false;
+                }
+
+                return true;
+            });
+
+            renderProducts(filtered);
+        }
+
+        // Event listeners for filters
+        document.getElementById('category').addEventListener('change', filterProducts);
+        document.getElementById('price-range').addEventListener('change', filterProducts);
+        document.getElementById('search').addEventListener('input', filterProducts);
+
+        // Initialize page
+        renderProducts();
+        updateCartCount();
+
+        // Store cart in global variable for other pages to access
+        window.cartData = cart;
+    </script>
+</body>
+</html>

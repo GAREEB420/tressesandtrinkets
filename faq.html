@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Tresses & Trinkets</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #764ba2;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #764ba2;
+        }
+
+        .cart-icon {
+            background: #764ba2;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.05);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .page-title {
+            text-align: center;
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .search-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: #666;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-color: transparent;
+        }
+
+        .tab-btn:hover {
+            border-color: #764ba2;
+        }
+
+        .faq-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .faq-section {
+            margin-bottom: 2rem;
+        }
+
+        .faq-section h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            background: white;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #f8f9fa;
+        }
+
+        .faq-question.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .faq-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-question.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .faq-answer.active {
+            padding: 1.5rem;
+            max-height: 300px;
+        }
+
+        .faq-answer p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .faq-answer p:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-cta {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 3rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .contact-cta h2 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .contact-cta p {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            margin: 0 0.5rem;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+            display: none;
+        }
+
+        .no-results h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .faq-container,
+            .search-section,
+            .contact-cta {
+                padding: 2rem;
+            }
+            
+            .category-tabs {
+                gap: 0.5rem;
+            }
+            
+            .tab-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .faq-question {
+                font-size: 1rem;
+                padding: 1rem;
+            }
+            
+            .faq-answer.active {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="home.html" class="logo">Tresses & Trinkets</a>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="catalog.html">Catalog</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <a href="cart.html" class="cart-icon">🛒 Cart</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1 class="page-title">Frequently Asked Questions</h1>
+            <p class="page-subtitle">Find answers to common questions about our scrunchies, orders, and policies</p>
+            
+            <section class="search-section">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search FAQ..." id="search-input">
+                    <span class="search-icon">🔍</span>
+                </div>
+                
+                <div class="category-tabs">
+                    <button class="tab-btn active" data-category="all">All</button>
+                    <button class="tab-btn" data-category="products">Products</button>
+                    <button class="tab-btn" data-category="orders">Orders</button>
+                    <button class="tab-btn" data-category="shipping">Shipping</button>
+                    <button class="tab-btn" data-category="returns">Returns</button>
+                    <button class="tab-btn" data-category="care">Care</button>
+                </div>
+            </section>
+
+            <div class="faq-container">
+                <div class="faq-section" data-category="products">
+                    <h2>Products</h2>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            What materials are your scrunchies made from?
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Our scrunchies are made from premium materials including 100% mulberry silk, organic cotton, satin, and velvet. Each material is carefully selected for its hair-friendly properties and durability.</p>
+                            <p>We prioritize materials that are gentle on hair and help prevent breakage and creasing.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Are your scrunchies suitable for all hair types?
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes! Our scrunchies are designed to work with all hair types, from fine to thick, straight to curly. The gentle materials and construction make them especially beneficial for those with delicate or chemically-treated hair.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            What's the difference between silk and satin scrunchies?
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Silk scrunchies are made from natural silk fibers and offer the ultimate in hair care benefits. They're naturally hypoallergenic, temperature-regulating, and extremely gentle on hair.</p>
+                            <p>Satin scrunchies provide similar smooth texture benefits at a more affordable price point. While not natural like silk, they still offer excellent hair protection against friction and breakage.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-section" data-category="orders">
+                    <h2>Orders & Payment</h2>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How do I place an order?
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Simply browse our collection, add items to your cart, and proceed to checkout. You'll need to provide your shipping information and payment details to complete your order.</p>
+                            <p>You'll receive an order confirmation email with your order number and details.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            What payment methods do you accept?
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We accept all major credit cards (Visa, MasterCard, American Express, Discover), PayPal, Apple Pay, Google Pay, and Shop Pay.</p>
+                            <p>All payments are processed securely through encrypted checkout systems.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Can I modify or cancel my order?
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Orders can be modified or cancelled within 1 hour of placement. After this time, orders enter our fulfillment process and cannot be changed.</p>
+                            <p>Please contact us immediately at support@tressesandtrinkets.com if you need to make changes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-section" data-category="shipping">
+                    <h2>Shipping & Delivery</h2>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How long does shipping take?
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Standard shipping takes 3-5 business days within the US. Express shipping (1-2 business days) and overnight shipping are also available.</p>
+                            <p>International shipping takes 7-14 business days depending on the destination.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Do you offer free shipping?
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes! We offer free standard shipping on orders over $35 within the United States.</p>
+                            <p>Express and overnight shipping options are available for an additional fee.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How can I track my order?
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Once your order ships, you'll receive a tracking number via email. You can use this number to track your package on our website or the carrier's website.</p>
+                            <p>You'll also receive updates on your order status throughout the shipping process.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-section" data-category="returns">
+                    <h2>Returns & Exchanges</h2>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            What is your return policy?
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We offer a 30-day return policy for unworn, unused items in their original packaging. Items must be returned in the same condition they were received.</p>
+                            <p>Please contact us to initiate a return and receive a prepaid return shipping label.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How do I exchange an item?
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>To exchange an item, please contact our customer service team. We'll guide you through the exchange process and help you find the perfect replacement.</p>
+                            <p>Exchanges are subject to availability and must be completed within 30 days of purchase.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Who pays for return shipping?
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We provide prepaid return shipping labels for all returns within the US. For international returns, customers are responsible for return shipping costs.</p>
+                            <p>If an item arrives damaged or defective, we'll cover all return shipping costs.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-section" data-category="care">
+                    <h2>Care Instructions</h2>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How do I care for my silk scrunchies?
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Silk scrunchies should be hand-washed or machine-washed on a gentle cycle with cold water and mild detergent. Always air dry - never put silk in the dryer.</p>
+                            <p>For best results, place in a mesh laundry bag when machine washing and use silk-specific detergent when available.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Can I put my scrunchies in the washing machine?
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Most of our scrunchies are machine washable on a gentle cycle. We recommend using a mesh laundry bag to protect them during washing.</p>
+                            <p>Always check the care label on your specific scrunchie for detailed washing instructions.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How often should I wash my scrunchies?
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We recommend washing your scrunchies every 1-2 weeks with regular use, or more frequently if you use heavy hair products.</p>
+                            <p>Clean scrunchies not only look better but also help maintain healthy hair and scalp.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="no-results">
+                    <h3>No results found</h3>
+                    <p>Try adjusting your search terms or browse through our categories above.</p>
+                </div>
+            </div>
+
+            <section class="contact-cta">
+                <h2>Still have questions?</h2>
+                <p>Can't find what you're looking for? Our customer service team is here to help!</p>
+                <a href="contact.html" class="contact-btn">Contact Us</a>
+                <a href="mailto:support@tressesandtrinkets.com" class="contact-btn">Email Support</a>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Tresses & Trinkets. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ functionality
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        const searchInput = document.getElementById('search-input');
+        const categoryTabs = document.querySelectorAll('.tab-btn');
+        const faqSections = document.querySelectorAll('.faq-section');
+        const noResults = document.querySelector('.no-results');
+
+        // Toggle FAQ items
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const isActive = question.classList.contains('active');
+
+                // Close all other FAQs
+                faqQuestions.forEach(q => {
+                    q.classList.remove('active');
+                    q.nextElementSibling.classList.remove('active');
+                });
+
+                // Toggle current FAQ
+                if (!isActive) {
+                    question.classList.add('active');
+                    answer.classList.add('active');
+                }
+            });
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            filterFAQs(searchTerm, 'all');
+        });
+
+        // Category tabs
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const category = tab.dataset.category;
+                const searchTerm = searchInput.value.toLowerCase();
+                filterFAQs(searchTerm, category);
+            });
+        });
+
+        function filterFAQs(searchTerm, category) {
+            let visibleCount = 0;
+
+            faqSections.forEach(section => {
+                const sectionCategory = section.dataset.category;
+                let sectionVisible = false;
+
+                if (category === 'all' || category === sectionCategory) {
+                    const faqItems = section.querySelectorAll('.faq-item');
+                    
+                    faqItems.forEach(item => {
+                        const question = item.querySelector('.faq-question').textContent.toLowerCase();
+                        const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                        
+                        if (searchTerm === '' || question.includes(searchTerm) || answer.includes(searchTerm)) {
+                            item.style.display = 'block';
+                            sectionVisible = true;
+                            visibleCount++;
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+
+                    section.style.display = sectionVisible ? 'block' : 'none';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+
+            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe sections for animation
+        document.querySelectorAll('.search-section, .faq-container, .contact-cta').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(section);
+        });
+
+        // Stagger FAQ item animations
+        setTimeout(() => {
+            document.querySelectorAll('.faq-item').forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                
+                setTimeout(() => {
+                    observer.observe(item);
+                }, index * 50);
+            });
+        }, 300);
+    </script>
+</body>
+</html>
